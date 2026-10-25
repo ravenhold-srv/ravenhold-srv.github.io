@@ -1,1 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ravenhold – Serveur Minecraft SMP médiéval</title>
+<meta name="description" content="Ravenhold : SMP Minecraft avec économie, trois spawns médiévaux et des mini-jeux.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --nuit:#141a26; --pierre:#1f283a; --pierre2:#2a3550;
+  --parchemin:#e9e2cf; --brume:#a9b0c2;
+  --laiton:#c9a24b; --pourpre:#8e2f3c; --pourpre2:#a83a49;
+  --titre:"Cinzel","Trajan Pro",Georgia,serif;
+  --texte:"EB Garamond",Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--nuit);color:var(--parchemin);font-family:var(--texte);font-size:1.2rem;line-height:1.65}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--laiton);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 1.5rem}
 
+nav{position:sticky;top:0;z-index:5;background:rgba(20,26,38,.94);border-bottom:1px solid var(--pierre2)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.8rem;padding-bottom:.8rem}
+.logo{font-family:var(--titre);font-weight:700;letter-spacing:.12em;text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.logo img{width:32px;height:32px;image-rendering:pixelated;border-radius:4px}
+nav ul{display:flex;gap:1.4rem;list-style:none;padding:0;font-size:1.05rem}
+nav ul a{text-decoration:none;color:var(--brume)}
+nav ul a:hover{color:var(--parchemin)}
+@media(max-width:640px){nav ul{display:none}}
+
+.hero{position:relative;overflow:hidden;padding:6rem 0 5rem;text-align:center;
+  background:
+   radial-gradient(ellipse at 50% 0%,#33405f 0,transparent 65%),
+   linear-gradient(var(--nuit),var(--pierre))}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;
+  background:var(--nuit);
+  clip-path:polygon(0 100%,0 40%,3% 40%,3% 0,6% 0,6% 40%,9% 40%,9% 0,12% 0,12% 40%,15% 40%,15% 0,18% 0,18% 40%,21% 40%,21% 0,24% 0,24% 40%,27% 40%,27% 0,30% 0,30% 40%,33% 40%,33% 0,36% 0,36% 40%,39% 40%,39% 0,42% 0,42% 40%,45% 40%,45% 0,48% 0,48% 40%,51% 40%,51% 0,54% 0,54% 40%,57% 40%,57% 0,60% 0,60% 40%,63% 40%,63% 0,66% 0,66% 40%,69% 40%,69% 0,72% 0,72% 40%,75% 40%,75% 0,78% 0,78% 40%,81% 40%,81% 0,84% 0,84% 40%,87% 40%,87% 0,90% 0,90% 40%,93% 40%,93% 0,96% 0,96% 40%,100% 40%,100% 100%)}
+.hero .raven{width:128px;height:128px;image-rendering:pixelated;border:3px solid var(--laiton);border-radius:6px;margin-bottom:1.2rem;background:#000}
+h1{font-family:var(--titre);font-weight:700;font-size:clamp(3rem,10vw,6.5rem);letter-spacing:.14em;line-height:1.05;text-indent:.14em}
+.hero p.sous{font-style:italic;color:var(--brume);font-size:1.35rem;margin:1rem auto 2rem;max-width:34ch}
+
+.ip{display:inline-flex;align-items:stretch;border:2px solid var(--laiton);background:var(--nuit);border-radius:4px;overflow:hidden}
+.ip code{font-family:var(--titre);font-size:1.15rem;letter-spacing:.06em;padding:.8rem 1.2rem;display:flex;align-items:center}
+.ip button{font:inherit;font-family:var(--titre);font-weight:700;font-size:.95rem;border:0;background:var(--laiton);color:var(--nuit);padding:0 1.2rem;cursor:pointer}
+.ip button:hover{background:#dbb85f}
+.statut{margin-top:1.3rem;display:inline-flex;align-items:center;gap:.6rem;font-size:1.1rem;color:var(--brume)}
+.pastille{width:12px;height:12px;border-radius:50%;background:#6b7280}
+.pastille.on{background:#5bbf6a}
+.pastille.off{background:var(--pourpre2)}
+.compteur{margin-top:1rem}
+.compteur .nb{font-family:var(--titre);font-weight:700;font-size:3rem;color:var(--laiton);line-height:1}
+.compteur .lbl{display:block;color:var(--brume);font-size:1.05rem}
+.actions{margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;text-decoration:none;font-family:var(--titre);font-weight:700;letter-spacing:.08em;padding:.85rem 1.6rem;border-radius:4px;border:2px solid var(--pourpre2);background:var(--pourpre);color:var(--parchemin)}
+.btn:hover{background:var(--pourpre2)}
+.btn.clair{background:transparent;border-color:var(--pierre2)}
+.btn.clair:hover{border-color:var(--laiton)}
+
+section{padding:4.5rem 0}
+h2{font-family:var(--titre);font-weight:700;font-size:clamp(1.8rem,4vw,2.5rem);letter-spacing:.08em;margin-bottom:.6rem}
+.intro{color:var(--brume);max-width:60ch;margin-bottom:2.5rem}
+.filet{width:64px;height:3px;background:var(--pourpre2);margin-bottom:1.2rem}
+
+.grille{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:820px){.grille{grid-template-columns:1fr}}
+.carte{background:var(--pierre);border:1px solid var(--pierre2);border-top:4px solid var(--laiton);padding:1.6rem}
+.carte h3{font-family:var(--titre);font-size:1.25rem;letter-spacing:.06em;margin-bottom:.5rem}
+.carte p{color:var(--brume);font-size:1.1rem}
+
+.bande{background:var(--pierre)}
+.deux{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+@media(max-width:820px){.deux{grid-template-columns:1fr}}
+.liste{list-style:none;padding:0}
+.liste li{padding:.9rem 0 .9rem 1.6rem;border-bottom:1px solid var(--pierre2);position:relative}
+.liste li::before{content:"";position:absolute;left:0;top:1.35rem;width:.6rem;height:.6rem;background:var(--laiton);transform:rotate(45deg)}
+.liste strong{font-family:var(--titre);font-weight:500;letter-spacing:.04em}
+
+.rejoindre{text-align:center}
+.etapes{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2.5rem 0;text-align:left;counter-reset:e}
+@media(max-width:820px){.etapes{grid-template-columns:1fr}}
+.etapes div{counter-increment:e;padding-left:3rem;position:relative}
+.etapes div::before{content:counter(e);position:absolute;left:0;top:0;width:2.2rem;height:2.2rem;border:2px solid var(--laiton);border-radius:50%;display:grid;place-items:center;font-family:var(--titre);color:var(--laiton)}
+.suivez{font-family:var(--titre);font-weight:500;letter-spacing:.08em;font-size:1.2rem;margin-top:3rem}
+.reseaux{margin-top:1rem}
+footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;color:var(--brume);font-size:1rem}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#haut"><img src="server-icon.png">
+    <ul>
+      <li><a href="#serveur">Le serveur</a></li>
+      <li><a href="#spawns">Les trois spawns</a></li>
+      <li><a href="#jeux">Mini-jeux</a></li>
+      <li><a href="#rejoindre">Nous rejoindre</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="haut">
+  <div class="wrap">
+    <img class="raven" src="server-icon.png">
+    <h1>Ravenhold</h1>
+    <p class="sous">Un SMP médiéval où chaque pièce d’or compte.</p>
+
+    <div class="ip">
+      <code id="ip">ravenhold.falixsrv.me</code>
+      <button id="copier" type="button">Copier</button>
+    </div>
+    <div class="statut" aria-live="polite">
+      <span class="pastille" id="pastille"></span>
+      <span id="joueurs">Vérification du serveur…</span>
+    </div>
+    <div class="compteur" id="compteur" hidden>
+      <span class="nb" id="nb">0</span>
+      <span class="lbl">joueur(s) en ligne</span>
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="https://discord.gg/U5dcNtaxm" target="_blank" rel="noopener">Rejoindre le Discord</a>
+      <a class="btn clair" href="#serveur">Découvrir le royaume</a>
+    </div>
+  </div>
+</header>
+
+<section id="serveur">
+  <div class="wrap">
+    <div class="filet"></div>
+    <h2>Un royaume à bâtir</h2>
+    <p class="intro">Ravenhold est un serveur survie multijoueur (SMP) avec une économie interne, trois spawns de style médiéval et des mini-jeux pour se mesurer entre deux expéditions.</p>
+    <div class="grille">
+      <article class="carte">
+        <h3>Survie en commun</h3>
+        <p>Construisez, explorez et fondez votre domaine au côté des autres joueurs.</p>
+      </article>
+      <article class="carte">
+        <h3>Économie interne</h3>
+        <p>Gagnez de l’argent, commercez avec les autres joueurs et faites prospérer votre fortune.</p>
+      </article>
+      <article class="carte">
+        <h3>Univers médiéval</h3>
+        <p>Châteaux, villages et remparts : l’ambiance commence dès votre arrivée.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="bande" id="spawns">
+  <div class="wrap">
+    <div class="filet"></div>
+    <h2>Trois spawns, trois façons d’arriver</h2>
+    <p class="intro">Choisissez où commencer votre aventure : chaque spawn a sa propre atmosphère.</p>
+    <div class="grille">
+      <article class="carte">
+        <h3>Le château et sa ville</h3>
+        <p>Une forteresse imposante, avec à ses pieds une ville médiévale animée à explorer.</p>
+      </article>
+      <article class="carte">
+        <h3>L’île des pirates</h3>
+        <p>Une île de flibustiers pour commencer l’aventure face à la mer.</p>
+      </article>
+      <article class="carte">
+        <h3>Le petit village</h3>
+        <p>Un village médiéval paisible, pour débuter dans une ambiance plus calme.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="jeux">
+  <div class="wrap deux">
+    <div>
+      <div class="filet"></div>
+      <h2>Mini-jeux</h2>
+      <p class="intro" style="margin-bottom:0">Besoin de souffler entre deux chantiers ? Quatre mini-jeux vous attendent, sans quitter le serveur.</p>
+    </div>
+    <ul class="liste">
+      <li><strong>Tir à l’arc</strong> : visez juste et prouvez votre précision.</li>
+      <li><strong>Arène PvP</strong> : affrontez les autres joueurs en combat.</li>
+      <li><strong>Survie contre les zombies</strong> : battez tous les morts-vivants pour gagner.</li>
+      <li><strong>Le pont de verre</strong> : à chaque pas, choisissez gauche ou droite. Une chance sur deux de passer, sinon c’est la chute et vous êtes éliminé.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="bande rejoindre" id="rejoindre">
+  <div class="wrap">
+    <div class="filet" style="margin-inline:auto"></div>
+    <h2>Rejoindre Ravenhold</h2>
+    <div class="etapes">
+      <div><strong>Lancez Minecraft Java</strong> et ouvrez « Multijoueur ».</div>
+      <div><strong>Ajoutez le serveur</strong> avec l’adresse <em>ravenhold.falixsrv.me</em>.</div>
+      <div><strong>Passez sur le Discord</strong> pour lire les règles et rencontrer la communauté.</div>
+    </div>
+    <a class="btn" href="https://discord.gg/U5dcNtaxm" target="_blank" rel="noopener">Ouvrir le Discord</a>
+    <h3 class="suivez">Suivez Ravenhold</h3>
+    <div class="actions reseaux">
+      <a class="btn clair" href="https://www.youtube.com/@Ravenold-d6i" target="_blank" rel="noopener">YouTube</a>
+      <a class="btn clair" href="https://www.tiktok.com/@ravenhold5" target="_blank" rel="noopener">TikTok</a>
+      <a class="btn clair" href="https://www.instagram.com/ravenold1/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Ravenhold – Serveur Minecraft indépendant, non affilié à Mojang ni à Microsoft.</div>
+</footer>
+
+<script>
+  const ADRESSE = "ravenhold.falixsrv.me";
+  const txt = document.getElementById("joueurs");
+  const pastille = document.getElementById("pastille");
+
+  async function lireStatut() {
+    try {
+      const r = await fetch("https://api.mcstatus.io/v2/status/java/" + ADRESSE);
+      const d = await r.json();
+      return { online: d.online, n: d.players ? d.players.online : 0, max: d.players ? d.players.max : 0 };
+    } catch (e) {
+      const r = await fetch("https://api.mcsrvstat.us/3/" + ADRESSE);
+      const d = await r.json();
+      return { online: d.online, n: d.players ? d.players.online : 0, max: d.players ? d.players.max : 0 };
+    }
+  }
+
+  async function majStatut() {
+    const c = document.getElementById("compteur");
+    try {
+      const s = await lireStatut();
+      if (s.online) {
+        pastille.className = "pastille on";
+        txt.textContent = "Serveur en ligne";
+        document.getElementById("nb").textContent = s.n + " / " + s.max;
+        c.hidden = false;
+      } else {
+        pastille.className = "pastille off";
+        txt.textContent = "Serveur hors ligne";
+        c.hidden = true;
+      }
+    } catch (e) {
+      pastille.className = "pastille";
+      txt.textContent = "Statut indisponible";
+      c.hidden = true;
+    }
+  }
+  majStatut();
+  setInterval(majStatut, 60000);
+
+  document.getElementById("copier").addEventListener("click", async function () {
+    try {
+      await navigator.clipboard.writeText(ADRESSE);
+      this.textContent = "Copié";
+    } catch (e) {
+      this.textContent = "Ctrl+C";
+    }
+    setTimeout(() => (this.textContent = "Copier"), 2000);
+  });
+</script>
+</body>
+</html>
