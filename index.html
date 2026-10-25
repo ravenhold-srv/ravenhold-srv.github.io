@@ -79,6 +79,20 @@ h2{font-family:var(--titre);font-weight:700;font-size:clamp(1.8rem,4vw,2.5rem);l
 .liste li::before{content:"";position:absolute;left:0;top:1.35rem;width:.6rem;height:.6rem;background:var(--laiton);transform:rotate(45deg)}
 .liste strong{font-family:var(--titre);font-weight:500;letter-spacing:.04em}
 
+/* Classement */
+.top{list-style:none;padding:0;max-width:640px;background:var(--nuit);border:1px solid var(--pierre2);border-top:4px solid var(--laiton)}
+.top li{display:grid;grid-template-columns:3rem 32px 1fr auto;align-items:center;gap:.9rem;padding:.7rem 1.2rem;border-bottom:1px solid var(--pierre2)}
+.top li:last-child{border-bottom:0}
+.top .rang{font-family:var(--titre);font-weight:700;color:var(--brume)}
+.top li:nth-child(1) .rang{color:#e0b84f}
+.top li:nth-child(2) .rang{color:#c0c4cf}
+.top li:nth-child(3) .rang{color:#cd7f32}
+.top img{image-rendering:pixelated;border-radius:3px}
+.top .nom{overflow:hidden;text-overflow:ellipsis}
+.top .or{font-family:var(--titre);font-weight:700;color:var(--laiton);white-space:nowrap}
+#top-etat{color:var(--brume);font-style:italic;margin-bottom:1rem}
+#top-etat:empty{display:none}
+
 .rejoindre{text-align:center}
 .etapes{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2.5rem 0;text-align:left;counter-reset:e}
 @media(max-width:820px){.etapes{grid-template-columns:1fr}}
@@ -94,11 +108,12 @@ footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;colo
 
 <nav>
   <div class="wrap">
-    <a class="logo" href="#haut"><img src="server-icon.png">
+    <a class="logo" href="#haut"><img src="server-icon.png" alt=""><span>Ravenhold</span></a>
     <ul>
       <li><a href="#serveur">Le serveur</a></li>
       <li><a href="#spawns">Les trois spawns</a></li>
       <li><a href="#jeux">Mini-jeux</a></li>
+      <li><a href="#classement">Classement</a></li>
       <li><a href="#rejoindre">Nous rejoindre</a></li>
     </ul>
   </div>
@@ -190,7 +205,17 @@ footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;colo
   </div>
 </section>
 
-<section class="bande rejoindre" id="rejoindre">
+<section class="bande" id="classement">
+  <div class="wrap">
+    <div class="filet"></div>
+    <h2>Les plus riches du royaume</h2>
+    <p class="intro">Le top 10 des fortunes du serveur</p>
+    <p id="top-etat">Chargement du classement…</p>
+    <ol class="top" id="top10"></ol>
+  </div>
+</section>
+
+<section class="rejoindre" id="rejoindre">
   <div class="wrap">
     <div class="filet" style="margin-inline:auto"></div>
     <h2>Rejoindre Ravenhold</h2>
@@ -261,6 +286,43 @@ footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;colo
       this.textContent = "Ctrl+C";
     }
     setTimeout(() => (this.textContent = "Copier"), 2000);
+  });
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyDUtNkYTcR5XRJdqxTvpxX4AB2xMjv8JUI",
+    databaseURL: "https://ravenhold-696969-default-rtdb.europe-west1.firebasedatabase.app"
+  });
+
+  const liste = document.getElementById("top10");
+  const etat = document.getElementById("top-etat");
+
+  onValue(ref(getDatabase(app), "classement"), snap => {
+    const data = Object.values(snap.val() || {}).sort((a, b) => a.rang - b.rang);
+    etat.textContent = data.length ? "" : "Le classement sera bientôt disponible.";
+    liste.replaceChildren(...data.map(j => {
+      const li = document.createElement("li");
+      const rang = document.createElement("span");
+      rang.className = "rang";
+      rang.textContent = "#" + j.rang;
+      const img = new Image(32, 32);
+      img.src = "https://mc-heads.net/avatar/" + encodeURIComponent(j.uuid) + "/32";
+      img.alt = "";
+      const nom = document.createElement("span");
+      nom.className = "nom";
+      nom.textContent = j.pseudo;
+      const or = document.createElement("span");
+      or.className = "or";
+      or.textContent = Number(j.argent).toLocaleString("fr-FR") + " $";
+      li.append(rang, img, nom, or);
+      return li;
+    }));
+  }, () => {
+    etat.textContent = "Classement indisponible pour le moment.";
   });
 </script>
 </body>
