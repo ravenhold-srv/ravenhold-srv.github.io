@@ -6,7 +6,24 @@
 <meta name="google-site-verification" content="gxH0B1pUs4LEKCdJy5ri6tZ78OueVDbUtGEP1hDKBxE" />
 <title>Ravenhold – Serveur Minecraft SMP médiéval</title>
 <meta name="description" content="Ravenhold : SMP Minecraft avec économie, trois spawns médiévaux et des mini-jeux.">
+
+<!-- Open Graph / aperçus de partage -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ravenhold">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Ravenhold – Serveur Minecraft SMP médiéval">
+<meta property="og:description" content="SMP Minecraft avec économie, trois spawns médiévaux, mini-jeux et visites de bases en vidéo. IP : ravenhold.falixsrv.me">
+<meta property="og:url" content="https://ravenhold-srv.github.io/">
+<meta property="og:image" content="https://ravenhold-srv.github.io/server-icon.png">
+<meta property="og:image:alt" content="Icône du serveur Ravenhold">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ravenhold – Serveur Minecraft SMP médiéval">
+<meta name="twitter:description" content="SMP Minecraft avec économie, trois spawns médiévaux, mini-jeux et visites de bases en vidéo.">
+<meta name="twitter:image" content="https://ravenhold-srv.github.io/server-icon.png">
+<meta name="theme-color" content="#141a26">
+
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
@@ -28,10 +45,11 @@ nav{position:sticky;top:0;z-index:5;background:rgba(20,26,38,.94);border-bottom:
 nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.8rem;padding-bottom:.8rem}
 .logo{font-family:var(--titre);font-weight:700;letter-spacing:.12em;text-decoration:none;display:flex;align-items:center;gap:.6rem}
 .logo img{width:32px;height:32px;image-rendering:pixelated;border-radius:4px}
-nav ul{display:flex;gap:1.4rem;list-style:none;padding:0;font-size:1.05rem}
+nav ul{display:flex;gap:1.2rem;list-style:none;padding:0;font-size:1.05rem}
 nav ul a{text-decoration:none;color:var(--brume)}
 nav ul a:hover{color:var(--parchemin)}
-@media(max-width:640px){nav ul{display:none}}
+@media(max-width:900px){nav ul{gap:.9rem;font-size:.95rem}}
+@media(max-width:760px){nav ul{display:none}}
 
 .hero{position:relative;overflow:hidden;padding:6rem 0 5rem;text-align:center;
   background:
@@ -94,11 +112,18 @@ h2{font-family:var(--titre);font-weight:700;font-size:clamp(1.8rem,4vw,2.5rem);l
 #top-etat{color:var(--brume);font-style:italic;margin-bottom:1rem}
 #top-etat:empty{display:none}
 
-.rejoindre{text-align:center}
+/* Étapes (visite de base + rejoindre) */
 .etapes{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2.5rem 0;text-align:left;counter-reset:e}
 @media(max-width:820px){.etapes{grid-template-columns:1fr}}
 .etapes div{counter-increment:e;padding-left:3rem;position:relative}
 .etapes div::before{content:counter(e);position:absolute;left:0;top:0;width:2.2rem;height:2.2rem;border:2px solid var(--laiton);border-radius:50%;display:grid;place-items:center;font-family:var(--titre);color:var(--laiton)}
+
+/* Visite de base + admin */
+.visite .etapes{margin-bottom:2rem}
+.visite .note{color:var(--brume);font-size:1.05rem;margin-top:1.2rem;max-width:60ch}
+.admin .intro{margin-bottom:1.8rem}
+
+.rejoindre{text-align:center}
 .suivez{font-family:var(--titre);font-weight:500;letter-spacing:.08em;font-size:1.2rem;margin-top:3rem}
 .reseaux{margin-top:1rem}
 footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;color:var(--brume);font-size:1rem}
@@ -115,6 +140,8 @@ footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;colo
       <li><a href="#spawns">Les trois spawns</a></li>
       <li><a href="#jeux">Mini-jeux</a></li>
       <li><a href="#classement">Classement</a></li>
+      <li><a href="#visite">Visite de base</a></li>
+      <li><a href="#admin">Devenir admin</a></li>
       <li><a href="#rejoindre">Nous rejoindre</a></li>
     </ul>
   </div>
@@ -122,7 +149,7 @@ footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;colo
 
 <header class="hero" id="haut">
   <div class="wrap">
-    <img class="raven" src="server-icon.png">
+    <img class="raven" src="server-icon.png" alt="Icône du serveur Ravenhold">
     <h1>Ravenhold</h1>
     <p class="sous">Un SMP médiéval où chaque pièce d’or compte.</p>
 
@@ -216,6 +243,30 @@ footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;colo
   </div>
 </section>
 
+<section class="visite" id="visite">
+  <div class="wrap">
+    <div class="filet"></div>
+    <h2>Votre base en vidéo</h2>
+    <p class="intro">Le concept : on visite la base d’un joueur, on la note, et on en fait une vidéo sur la chaîne YouTube du serveur. Votre construction mérite d’être vue.</p>
+    <div class="etapes">
+      <div><strong>Envoyez votre base</strong> grâce au formulaire.</div>
+      <div><strong>On la visite</strong> en jeu pour en découvrir chaque pièce et chaque détail.</div>
+      <div><strong>On la note en vidéo</strong> sur la chaîne YouTube de Ravenhold, dans une prochaine vidéo.</div>
+    </div>
+    <a class="btn" href="https://ravenhold-srv.github.io/videos/" target="_blank" rel="noopener">Proposer ma base</a>
+    <p class="note">Toutes les bases ne passeront pas dans une vidéo, mais chaque candidature sera regardée.</p>
+  </div>
+</section>
+
+<section class="bande admin" id="admin">
+  <div class="wrap">
+    <div class="filet"></div>
+    <h2>Devenir admin</h2>
+    <p class="intro">Vous aimez Ravenhold et voulez aider à le faire vivre ? L’équipe d’administration recrute. Remplissez le formulaire de candidature pour postuler.</p>
+    <a class="btn" href="https://ravenhold-srv.github.io/admin/" target="_blank" rel="noopener">Postuler comme admin</a>
+  </div>
+</section>
+
 <section class="rejoindre" id="rejoindre">
   <div class="wrap">
     <div class="filet" style="margin-inline:auto"></div>
@@ -236,7 +287,7 @@ footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;colo
 </section>
 
 <footer>
-  <div class="wrap">Site développé par <a href="https://onelevel-studio.github.io" target="_blank">OneLevel Studio</a></div>
+  <div class="wrap">Site développé par <a href="https://onelevel-studio.github.io" target="_blank" rel="noopener">OneLevel Studio</a></div>
 </footer>
 
 <script>
@@ -247,6 +298,7 @@ footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;colo
   async function lireStatut() {
     try {
       const r = await fetch("https://api.mcstatus.io/v2/status/java/" + ADRESSE);
+      if (!r.ok) throw new Error("mcstatus " + r.status);
       const d = await r.json();
       return { online: d.online, n: d.players ? d.players.online : 0, max: d.players ? d.players.max : 0 };
     } catch (e) {
