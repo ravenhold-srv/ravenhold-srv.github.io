@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proposer ma base – Ravenhold</title>
+<meta name="description" content="Proposez votre base pour qu’elle soit visitée et notée dans une vidéo sur la chaîne YouTube du serveur Minecraft Ravenhold.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ravenhold">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Proposer ma base – Ravenhold">
+<meta property="og:description" content="Votre base visitée, notée et mise en vidéo sur la chaîne YouTube de Ravenhold.">
+<meta property="og:image" content="https://ravenhold-srv.github.io/server-icon.png">
+<meta name="theme-color" content="#141a26">
+<link rel="icon" href="../favicon.ico" type="image/x-icon" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --nuit:#141a26; --pierre:#1f283a; --pierre2:#2a3550;
+  --parchemin:#e9e2cf; --brume:#a9b0c2;
+  --laiton:#c9a24b; --pourpre:#8e2f3c; --pourpre2:#a83a49;
+  --titre:"Cinzel","Trajan Pro",Georgia,serif;
+  --texte:"EB Garamond",Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--nuit);color:var(--parchemin);font-family:var(--texte);font-size:1.2rem;line-height:1.65}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--laiton);outline-offset:3px}
+.wrap{max-width:760px;margin:0 auto;padding:0 1.5rem}
+
+nav{position:sticky;top:0;z-index:5;background:rgba(20,26,38,.94);border-bottom:1px solid var(--pierre2)}
+nav .wrap{max-width:1040px;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.8rem;padding-bottom:.8rem}
+.logo{font-family:var(--titre);font-weight:700;letter-spacing:.12em;text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.logo img{width:32px;height:32px;image-rendering:pixelated;border-radius:4px}
+nav a.retour{text-decoration:none;color:var(--brume);font-size:1.05rem}
+nav a.retour:hover{color:var(--parchemin)}
+
+header.entete{padding:4rem 0 2rem;background:radial-gradient(ellipse at 50% 0%,#33405f 0,transparent 65%),linear-gradient(var(--nuit),var(--pierre))}
+.filet{width:64px;height:3px;background:var(--pourpre2);margin-bottom:1.2rem}
+h1{font-family:var(--titre);font-weight:700;font-size:clamp(2rem,6vw,3.2rem);letter-spacing:.08em;line-height:1.15;margin-bottom:.8rem}
+.intro{color:var(--brume);max-width:60ch}
+
+main{padding:3rem 0 4.5rem}
+form{background:var(--pierre);border:1px solid var(--pierre2);border-top:4px solid var(--laiton);padding:2rem}
+@media(max-width:640px){form{padding:1.4rem}}
+.champ{margin-bottom:1.5rem}
+label{display:block;font-family:var(--titre);font-weight:500;letter-spacing:.04em;font-size:1.05rem;margin-bottom:.4rem}
+.aide{display:block;color:var(--brume);font-size:1rem;margin-bottom:.5rem}
+input[type=text],input[type=number]{width:100%;font:inherit;font-size:1.1rem;color:var(--parchemin);background:var(--nuit);border:2px solid var(--pierre2);border-radius:4px;padding:.7rem .9rem}
+input:hover{border-color:var(--brume)}
+input:focus{border-color:var(--laiton);outline:none}
+input:focus-visible{outline:3px solid var(--laiton);outline-offset:2px}
+.piege{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.btn{font:inherit;font-family:var(--titre);font-weight:700;letter-spacing:.08em;padding:.85rem 1.6rem;border-radius:4px;border:2px solid var(--pourpre2);background:var(--pourpre);color:var(--parchemin);cursor:pointer}
+.btn:hover{background:var(--pourpre2)}
+.btn[disabled]{opacity:.6;cursor:wait}
+#etat{margin-top:1.2rem;padding:.9rem 1.1rem;border-left:4px solid var(--brume);background:var(--nuit)}
+#etat:empty{display:none}
+#etat.ok{border-color:#5bbf6a}
+#etat.err{border-color:var(--pourpre2)}
+footer{border-top:1px solid var(--pierre2);padding:2rem 0;text-align:center;color:var(--brume);font-size:1rem}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="../"><img src="../server-icon.png" alt=""><span>Ravenhold</span></a>
+    <a class="retour" href="../">Retour au site</a>
+  </div>
+</nav>
+
+<header class="entete">
+  <div class="wrap">
+    <div class="filet"></div>
+    <h1>Proposer ma base</h1>
+    <p class="intro">Indiquez votre pseudo et le numéro de la home où se trouve votre base. Nous la visiterons, nous la noterons et elle pourra apparaître dans une prochaine vidéo sur la chaîne YouTube de Ravenhold.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <form id="form" novalidate>
+      <!-- Anti-spam : champ piège invisible -->
+      <div class="piege" aria-hidden="true">
+        <label for="_honey">Ne pas remplir</label>
+        <input type="text" name="_honey" id="_honey" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="champ">
+        <label for="mc">Pseudo Minecraft</label>
+        <input type="text" id="mc" name="Pseudo Minecraft" required maxlength="32" autocomplete="off">
+      </div>
+
+      <div class="champ">
+        <label for="home">Numéro de la home</label>
+        <span class="aide">La home où se trouve votre base.</span>
+        <input type="number" id="home" name="Numéro de home" required min="1" max="9" step="1" inputmode="numeric">
+      </div>
+
+      <button class="btn" type="submit" id="envoyer">Envoyer ma base</button>
+      <div id="etat" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">Site développé par <a href="https://onelevel-studio.github.io" target="_blank" rel="noopener">OneLevel Studio</a></div>
+</footer>
+
+<script>
+  // Même adresse (ou identifiant FormSubmit) que pour le formulaire admin.
+  const DESTINATAIRE = "ravenold2229@gmail.com";
+
+  const form = document.getElementById("form");
+  const etat = document.getElementById("etat");
+  const bouton = document.getElementById("envoyer");
+
+  function message(texte, type) {
+    etat.textContent = texte;
+    etat.className = type || "";
+  }
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      message("Indiquez votre pseudo et un numéro de home valide.", "err");
+      return;
+    }
+    const data = new FormData(form);
+    if (data.get("_honey")) return; // robot détecté
+    data.append("_subject", "Base proposée : " + data.get("Pseudo Minecraft") + " (home " + data.get("Numéro de home") + ")");
+    data.append("_template", "table");
+    data.append("_captcha", "false");
+
+    bouton.disabled = true;
+    message("Envoi en cours…");
+    try {
+      const r = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(DESTINATAIRE), {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: data
+      });
+      const d = await r.json();
+      if (!r.ok || String(d.success) !== "true") throw new Error(d.message || "Erreur");
+      form.reset();
+      message("Base envoyée. Elle sera peut-être visitée dans une prochaine vidéo.", "ok");
+    } catch (err) {
+      message("L’envoi a échoué. Réessayez dans un instant, ou contactez-nous sur le Discord.", "err");
+    } finally {
+      bouton.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
